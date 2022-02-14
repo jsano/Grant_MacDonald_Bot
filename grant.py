@@ -65,7 +65,8 @@ def subject_recipient(c):
             "THOR",
             "ELON MUSK",
             race() + " BOYS",
-            cock()]
+            cock(),
+            "RAM RANCH COWBOYS"]
     if c == "s":
         opts += [obj()]
         if not yes:
@@ -79,6 +80,8 @@ def subject_recipient(c):
     ret += rng(opts)
     if "HOLE" in ret:
         BHflag = True
+    if "COCK" in ret:
+        Cockflag = True
     if not yes and not BHflag and not Cockflag and not "BOY" in ret:
         if Cockflag:
             ret += optional("'S " + obj())[0]
@@ -100,8 +103,8 @@ def action():
     opts = []
     if Cockflag:
         return rng([("FUCKING " + optional("AND FUCKING AND FUCKING ")[0], "p"),
-                ("FUCKING" + optional("AND FUCKING AND FUCKING")[0], "n"), ("DEEP UP ", "p"),
-                ("ERUPTING WITH CUM " + optional("ERUPTING WITH CUM, ERUPTING WITH CUM")[0], "n")])
+                ("FUCKING" + optional(" AND FUCKING AND FUCKING")[0], "n"), ("DEEP UP ", "p"),
+                ("ERUPTING WITH CUM" + optional(" ERUPTING WITH CUM, ERUPTING WITH CUM")[0], "n")])
     if BHflag:
         ret += optional("IN THE AIR ")[0]
     else:
@@ -130,7 +133,8 @@ def no_recipient_action():
             "SWALLOWING LOADS AND LOADS OF CUM, LOADS AND LOADS OF CUM",
             "BEGGING AND BEGGING FOR MORE, BEGGING AND BEGGING FOR MORE",
             "BEGGING AND BEGGING TO BE FUCKED, BEGGING AND BEGGING TO BE FUCKED",
-            "OINKING AND OINKING AND OINKING, OINKING AND OINKING AND OINKING"]
+            "OINKING AND OINKING AND OINKING, OINKING AND OINKING AND OINKING",
+            "DEEPER THAN YOU'VE EVER BEEN FUCKED BEFORE"]
 
 def filler():
     opts = ["OH FUCK",
