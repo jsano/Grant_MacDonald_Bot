@@ -6,7 +6,7 @@ import random
 # How many times each verse plays
 #repeat = 2
 # How many lines are in each verse
-body = 10
+body = 5
 
 # Pick a value from list ARGS at random
 def rng(args):
@@ -38,7 +38,7 @@ def vehicle():
     return rng(opts)  + ", "
 
 def location():
-    opts = [rng(["PULLING UP TO THE ", "ON THE "]) + rng(["COCKSHIP", "CUMSHIP", "FUCKSHIP", "DRIVEWAY"]) + optional(".XXX")[0],
+    opts = [rng(["PULLING UP TO THE ", "ON THE "]) + rng(["DRIVEWAY", rng(["COCKSHIP", "CUMSHIP", "FUCKSHIP"]) + optional(".XXX")[0]]),
             "RIVEN ROCK, MONTECITO, CALIFORNIA",
             "ON THE ESCALADE RANCH",
             "AT RAM RANCH" + optional(", PRINCE EDWARD ISLAND, CAVENDISH")[0]]
@@ -46,10 +46,12 @@ def location():
 
 # A special trigger that's True when the subject is a butthole
 BHflag = False
+Cockflag = False
 
 # Returns random subject or recipient based on input. This function returns with a space at the end
 def subject_recipient(c):
     global BHflag
+    global Cockflag
     ret = ""
     yes = False
     if c == "s" and random.random() < 0.5:
@@ -59,7 +61,11 @@ def subject_recipient(c):
             "JUSTIN BIEBER",
             "JONAS BROTHERS",
             "SHAWN DRISCOLL",
-            "ANDALLA"]
+            "ANDALLA",
+            "THOR",
+            "ELON MUSK",
+            race() + " BOYS",
+            cock()]
     if c == "s":
         opts += [obj()]
         if not yes:
@@ -67,38 +73,49 @@ def subject_recipient(c):
     if c == "r":
         opts += ["THAT BOY",
                 "YOU BOY",
-                cock(),
                 "YOUR " + obj()]
         if not yes:
             opts += ["THE BLACK COCK GANG"]
     ret += rng(opts)
     if "HOLE" in ret:
         BHflag = True
-    if not yes and not BHflag and c == "s":
-        ret += optional("'S " + rng([cock, obj])())[0]
+    if not yes and not BHflag and not Cockflag and not "BOY" in ret:
+        if Cockflag:
+            ret += optional("'S " + obj())[0]
+        else:
+            ret += optional("'S " + rng([cock, obj])())[0]
+    if "HOLE" in ret:
+        BHflag = True
+    if "COCK" in ret:
+        Cockflag = True
     return ret + (" " if c == "s" else "")
 
 # Returns random action to a subject. This function randomly picks and returns whether the recipient
 # is a "c"ock, "p"erson, or "n"one. This function returns with a space at the end
 def action():
+    global Cockflag
     global BHflag 
     c = rng(["c", "p", "n"])
     ret = ""
     opts = []
+    if Cockflag:
+        return rng([("FUCKING " + optional("AND FUCKING AND FUCKING ")[0], "p"),
+                ("FUCKING" + optional("AND FUCKING AND FUCKING")[0], "n"), ("DEEP UP ", "p"),
+                ("ERUPTING WITH CUM " + optional("ERUPTING WITH CUM, ERUPTING WITH CUM")[0], "n")])
     if BHflag:
-        ret += "IN THE AIR "
-        BHflag = False
+        ret += optional("IN THE AIR ")[0]
     else:
+        opts += ["FUCKING" + optional(" AND FUCKING AND FUCKING")[0],
+                rng(["SUCKING", "LICKING"]) + optional(" AND " + rng(["SUCKING", "LICKING"]) + " AND " + rng(["SUCKING", "LICKING"]))[0]]
         if random.random() < 0.5: 
             ret = optional("STRIP NAKED ")[0]
     opts += ["GETTING BUTTFUCKED" + optional(" AND BUTTFUCKED AND BUTTFUCKED")[0] + (" BY" if c == 'c' or c == 'p' else ""),
-            "GETTING FUCKED" + optional(" AND FUCKED AND FUCKED")[0] + (" BY" if c == 'c' or c == 'p' else ""),
-            "FUCKING" + optional(" AND FUCKING AND FUCKING")[0],
-            rng(["SUCKING", "LICKING"]) + optional(" AND " + rng(["SUCKING", "LICKING"]) + " AND " + rng(["SUCKING", "LICKING"]))[0]]
-    if c == "p":
+            "GETTING FUCKED" + optional(" AND FUCKED AND FUCKED")[0] + (" BY" if c == 'c' or c == 'p' else "")]
+    if c == "p" and not BHflag:
         opts += ["DEEP UP"]
     if c == "n":
         opts += no_recipient_action() + [""]
+    BHflag = False
     ret += rng(opts)
     return ret + (" " if not c == "n" else ""), c
 
@@ -170,5 +187,7 @@ for i in range(body):
     verse += optional(", " + rng(no_recipient_action()) + " ")[0]
     verse += optional("\n" + filler())[0]
     verse += "\n"
+    BHflag = False
+    Cockflag = False
 #for i in range(repeat):
 print(verse)
