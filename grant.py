@@ -37,13 +37,21 @@ def vehicle():
             "FORD RAPTOR TRUCKS"]
     return rng(opts)  + ", "
 
+def cowboy():
+    opts = ["RODEO BOYS",
+            "NAKED N----S",
+            "RAM RANCH COWBOYS",
+            "NAKED COWBOYS",
+            "WILD HORSES"]
+    return rng(["18", "36", "40", str(math.ceil(random.random() * 1000)), "HUNDREDS OF"]) + " " + rng(opts) + " "
+
 def location():
     opts = [rng(["PULLING UP TO THE ", "ON THE "]) + rng(["DRIVEWAY", rng(["COCKSHIP", "CUMSHIP", "FUCKSHIP"]) + optional(".XXX")[0]]),
-            "RIVEN ROCK, MONTECITO, CALIFORNIA",
+            "AT RIVEN ROCK, MONTECITO, CALIFORNIA",
             "ON THE ESCALADE RANCH",
-            "BEVERLY HILLS, TERRACE? BEVERLY RIDGE TERRACE IN CALIFORNIA, HOLLYWOOD HILLS",
+            "AT BEVERLY HILLS, TERRACE? BEVERLY RIDGE TERRACE IN CALIFORNIA, HOLLYWOOD HILLS",
             "AT RAM RANCH" + optional(", PRINCE EDWARD ISLAND, CAVENDISH")[0],
-            "JASPER, CANADA"]
+            "AT JASPER, CANADA"]
     return rng(opts) + "?"
 
 # A special trigger that's True when the subject is a butthole/cock
@@ -202,7 +210,7 @@ def obj():
 
 # START LYRICS
 verse = ""
-verse += "YO, WHAT DO " + rng(["WE", "I"]) + " SEE? " + optional(military)[0] + optional(vehicle)[0] + location() + "\n"
+verse += "YO, WHAT DO " + rng(["WE", "I"]) + " SEE? " + rng([cowboy(), optional(military)[0] + optional(vehicle)[0]]) + location() + "\n"
 for i in range(body):
     verse += subject_recipient("s")
     a, r = action()
