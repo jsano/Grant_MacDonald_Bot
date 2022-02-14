@@ -2,7 +2,7 @@ import math
 import random
 
 # How many verses are in the total song
-#verse = 3
+#verses = 3
 # How many times each verse plays
 #repeat = 2
 # How many lines are in each verse
@@ -142,7 +142,7 @@ def action():
 def no_recipient_action():
     return ["ERUPTING WITH CUM" + optional(" ERUPTING WITH CUM, ERUPTING WITH CUM")[0],
             "JUST DONE FUCKED YOUR " + obj(),
-            "ON THE FLOOR" + optional(" ON ALL FOURS ")[0],
+            "ON THE FLOOR" + optional(" ON ALL FOURS")[0],
             "SWALLOW ALL THAT CUM" + optional(" BOY")[0],
             "YOU LOVE SWALLOWING CUM" + optional(" BOY")[0],
             "YOU LOVE THAT " + cock() + " DEEP UP YOUR " + obj() + optional(" BOY")[0],
@@ -155,7 +155,7 @@ def no_recipient_action():
 
 def filler():
     opts = ["OH FUCK",
-            rng([military, vehicle])() + "GONNA TRY TO RESCUE PRINCE HARRY" + optional(" FROM THE BLACK COCK GANG")[0],
+            optional(military())[0] + optional(vehicle())[0] + "GONNA TRY TO RESCUE PRINCE HARRY" + optional(" FROM THE BLACK COCK GANG")[0],
             "CUM A FLOWING, CUM A FLOWING, CUM A FLOWING",
             "DEEP DEEP DEEP, DEEP DEEP DEEP",
             "IN IN IN, IN IN IN",
@@ -171,8 +171,7 @@ def cock():
             race() + " ",
             "12 INCH ",
             "THROBBING ",
-            "JOCKBOY ",
-            "PLEDGEBOY ",
+            rng(["JOCKBOY ", "PLEDGEBOY ", "GROG BOY "]),
             "STUD ",
             ""]
     for i in range(3):
@@ -201,9 +200,9 @@ verse = ""
 verse += "YO, WHAT DO " + rng(["WE", "I"]) + " SEE? " + optional(military)[0] + optional(vehicle)[0] + location() + "\n"
 for i in range(body):
     verse += subject_recipient("s")
-    a, b = action()
+    a, r = action()
     verse += a
-    if b == "c" or b == "p":
+    if r == "c" or r == "p":
         verse += subject_recipient("r")
     verse += optional(", " + rng(no_recipient_action()) + " ")[0]
     verse += optional("\n" + filler())[0]
