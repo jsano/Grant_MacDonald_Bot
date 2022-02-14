@@ -41,17 +41,21 @@ def location():
     opts = [rng(["PULLING UP TO THE ", "ON THE "]) + rng(["DRIVEWAY", rng(["COCKSHIP", "CUMSHIP", "FUCKSHIP"]) + optional(".XXX")[0]]),
             "RIVEN ROCK, MONTECITO, CALIFORNIA",
             "ON THE ESCALADE RANCH",
+            "BEVERLY HILLS, TERRACE? BEVERLY RIDGE TERRACE IN CALIFORNIA, HOLLYWOOD HILLS",
             "AT RAM RANCH" + optional(", PRINCE EDWARD ISLAND, CAVENDISH")[0]]
     return rng(opts) + "?"
 
-# A special trigger that's True when the subject is a butthole
+# A special trigger that's True when the subject is a butthole/cock
 BHflag = False
 Cockflag = False
+# The current line's subject
+Subject = ""
 
 # Returns random subject or recipient based on input. This function returns with a space at the end
 def subject_recipient(c):
     global BHflag
     global Cockflag
+    global Subject
     ret = ""
     yes = False
     if c == "s" and random.random() < 0.5:
@@ -77,16 +81,29 @@ def subject_recipient(c):
                 "YOUR " + obj()]
         if not yes:
             opts += ["THE BLACK COCK GANG"]
-    ret += rng(opts)
+    if (c == "s"):
+        Subject = rng(opts)
+        ret += Subject
+    else:
+        temp = rng(opts)
+        while temp == Subject:
+            temp = rng(opts)
+        ret += temp
+        Subject = ""
+    currBH = False
+    currCock = False
     if "HOLE" in ret:
-        BHflag = True
+        currBH = True
     if "COCK" in ret:
-        Cockflag = True
-    if not yes and not BHflag and not Cockflag and not "BOY" in ret:
+        currCock = True
+    if not yes and not currBH and not currCock and not "BOY" in ret:
         if Cockflag:
             ret += optional("'S " + obj())[0]
         else:
-            ret += optional("'S " + rng([cock, obj])())[0]
+            if BHflag:
+                ret += optional("'S " + cock())[0]
+            else:
+                ret += optional("'S " + rng([cock, obj])())[0]
     if "HOLE" in ret:
         BHflag = True
     if "COCK" in ret:
@@ -104,7 +121,8 @@ def action():
     if Cockflag:
         return rng([("FUCKING " + optional("AND FUCKING AND FUCKING ")[0], "p"),
                 ("FUCKING" + optional(" AND FUCKING AND FUCKING")[0], "n"), ("DEEP UP ", "p"),
-                ("ERUPTING WITH CUM" + optional(" ERUPTING WITH CUM, ERUPTING WITH CUM")[0], "n")])
+                ("ERUPTING WITH CUM" + optional(" ERUPTING WITH CUM, ERUPTING WITH CUM")[0], "n"),
+                ("STICKING STRAIGHT OUT", "n")])
     if BHflag:
         ret += optional("IN THE AIR ")[0]
     else:
@@ -118,7 +136,6 @@ def action():
         opts += ["DEEP UP"]
     if c == "n":
         opts += no_recipient_action() + [""]
-    BHflag = False
     ret += rng(opts)
     return ret + (" " if not c == "n" else ""), c
 
