@@ -42,7 +42,8 @@ def location():
             "RIVEN ROCK, MONTECITO, CALIFORNIA",
             "ON THE ESCALADE RANCH",
             "BEVERLY HILLS, TERRACE? BEVERLY RIDGE TERRACE IN CALIFORNIA, HOLLYWOOD HILLS",
-            "AT RAM RANCH" + optional(", PRINCE EDWARD ISLAND, CAVENDISH")[0]]
+            "AT RAM RANCH" + optional(", PRINCE EDWARD ISLAND, CAVENDISH")[0],
+            "JASPER, CANADA"]
     return rng(opts) + "?"
 
 # A special trigger that's True when the subject is a butthole/cock
@@ -121,13 +122,15 @@ def action():
     if Cockflag:
         return rng([("FUCKING " + optional("AND FUCKING AND FUCKING ")[0], "p"),
                 ("FUCKING" + optional(" AND FUCKING AND FUCKING")[0], "n"), ("DEEP UP ", "p"),
-                ("ERUPTING WITH CUM" + optional(" ERUPTING WITH CUM, ERUPTING WITH CUM")[0], "n"),
-                ("STICKING STRAIGHT OUT", "n")])
+                ("ERUPTING WITH CUM" + optional(", ERUPTING WITH CUM, ERUPTING WITH CUM")[0], "n"),
+                ("STICKING STRAIGHT OUT", "n"),
+                ("FEEDING " + optional("AND FEEDING AND FEEDING ")[0], "p")])
     if BHflag:
         ret += optional("IN THE AIR ")[0]
     else:
         opts += ["FUCKING" + optional(" AND FUCKING AND FUCKING")[0],
-                rng(["SUCKING", "LICKING"]) + optional(" AND " + rng(["SUCKING", "LICKING"]) + " AND " + rng(["SUCKING", "LICKING"]))[0]]
+                rng(["SUCKING", "LICKING"]) + optional(" AND " + rng(["SUCKING", "LICKING"]) + " AND " + rng(["SUCKING", "LICKING"]))[0],
+                "FEEDING" + optional(" AND FEEDING AND FEEDING")[0]]
         if random.random() < 0.5: 
             ret = optional("STRIP NAKED ")[0]
     opts += ["GETTING BUTTFUCKED" + optional(" AND BUTTFUCKED AND BUTTFUCKED")[0] + (" BY" if c == 'c' or c == 'p' else ""),
@@ -140,7 +143,7 @@ def action():
     return ret + (" " if not c == "n" else ""), c
 
 def no_recipient_action():
-    return ["ERUPTING WITH CUM" + optional(" ERUPTING WITH CUM, ERUPTING WITH CUM")[0],
+    return ["ERUPTING WITH CUM" + optional(", ERUPTING WITH CUM, ERUPTING WITH CUM")[0],
             "JUST DONE FUCKED YOUR " + obj(),
             "ON THE FLOOR" + optional(" ON ALL FOURS")[0],
             "SWALLOW ALL THAT CUM" + optional(" BOY")[0],
@@ -151,7 +154,8 @@ def no_recipient_action():
             "BEGGING AND BEGGING FOR MORE, BEGGING AND BEGGING FOR MORE",
             "BEGGING AND BEGGING TO BE FUCKED, BEGGING AND BEGGING TO BE FUCKED",
             "OINKING AND OINKING AND OINKING, OINKING AND OINKING AND OINKING",
-            "DEEPER THAN YOU'VE EVER BEEN FUCKED BEFORE"]
+            "DEEPER THAN YOU'VE EVER BEEN FUCKED BEFORE",
+            "FEEDING YOU LOADS AND LOADS OF CUM, LOADS AND LOADS OF CUM"]
 
 def filler():
     opts = ["OH FUCK",
@@ -162,7 +166,8 @@ def filler():
             "FUCKPIG WHORE, FUCKPIG WHORE, FUCKPIG WHORE",
             "UP AND DOWN, UP AND DOWN, UP AND DOWN",
             "DEEPER AND DEEPER AND DEEPER",
-            "IN AND OUT, IN AND OUT, IN AND OUT"]
+            "IN AND OUT, IN AND OUT, IN AND OUT",
+            "ONE AFTER ONE AFTER ONE, ONE AFTER ONE AFTER ONE"]
     return rng(opts)
 
 def cock():
@@ -193,7 +198,7 @@ def race():
 def obj():
     opts = [optional("BUTTER ")[0] + "BUTTHOLE",
             "BOYHOLE"]
-    return rng(opts)
+    return optional("VIRGIN ")[0] + rng(opts)
 
 # START LYRICS
 verse = ""
@@ -204,6 +209,8 @@ for i in range(body):
     verse += a
     if r == "c" or r == "p":
         verse += subject_recipient("r")
+    if verse[len(verse) - 1] == " ":
+        verse = verse[:len(verse) - 1]
     verse += optional(", " + rng(no_recipient_action()) + " ")[0]
     verse += optional("\n" + filler())[0]
     verse += "\n"
