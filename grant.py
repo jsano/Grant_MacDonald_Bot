@@ -86,8 +86,9 @@ def subject_recipient(c):
             opts += ["BLACK COCK GANG"]
     if c == "r":
         opts += ["THAT BOY",
-                "YOU BOY",
-                "YOUR " + obj()]
+                "YOU BOY"]
+        if not BHflag:
+            opts += ["YOUR " + obj()]
         if not yes:
             opts += ["THE BLACK COCK GANG"]
     if (c == "s"):
@@ -181,8 +182,8 @@ def filler():
 def cock():
     ret = ""
     opts = [rng(["HUGE HARD ", "BIG ", "BIG HARD "]),
-            race() + " ",
             "12 INCH ",
+            race() + " ",
             "THROBBING ",
             rng(["JOCKBOY ", "PLEDGEBOY ", "GROG BOY "]),
             "STUD ",
@@ -205,7 +206,8 @@ def race():
 
 def obj():
     opts = [optional("BUTTER ")[0] + "BUTTHOLE",
-            "BOYHOLE"]
+            "BOYHOLE",
+            "SLUTHOLE"]
     return optional("VIRGIN ")[0] + rng(opts)
 
 # START LYRICS
